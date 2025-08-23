@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World with IP and Timestamp</title>
+</head>
+<body>
+
+    <h1>Hello World!</h1>
+    <p>This is a simple HTML page.</p>
+    
+    <!-- แสดงผล IP Address -->
+    <p>Your IP Address is: <span id="ip-address">Loading...</span></p>
+
+    <!-- เพิ่มส่วนแสดงผล Timestamp -->
+    <p>Current Time: <span id="timestamp">Loading...</span></p>
+
+    <script>
+        // --- ส่วนของการดึง IP Address (เหมือนเดิม) ---
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+                // นำค่า IP ที่ได้ไปแสดงผล
+                document.getElementById('ip-address').innerHTML = data.ip;
+            })
+            .catch(error => {
+                console.error('Error fetching IP:', error);
+                document.getElementById('ip-address').innerHTML = 'Could not fetch IP';
+            });
+
+        // --- ส่วนของการแสดง Timestamp ที่เพิ่มเข้ามาใหม่ ---
+        // สร้าง object Date เพื่อเอาเวลาปัจจุบัน
+        const now = new Date();
+        
+        // จัดรูปแบบการแสดงผลให้อ่านง่าย (เช่น 8/24/2025, 12:44:00 AM)
+        // toLocaleString() จะแสดงผลตามโซนเวลาของเครื่องผู้ใช้
+        const formattedDateTime = now.toLocaleString(); 
+        
+        // นำเวลาที่จัดรูปแบบแล้วไปแสดงผล
+        document.getElementById('timestamp').innerHTML = formattedDateTime;
+    </script>
+
+</body>
+</html>
