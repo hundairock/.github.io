@@ -20,34 +20,25 @@
 
     <div class="w-full max-w-md p-8 space-y-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg text-center">
         <!-- Header section -->
-        <h1 class="text-3xl font-bold text-gray-800 dark:text-white">What's My IP Address?</h1>
-        <p class="text-gray-600 dark:text-gray-400">Click the button below to find out your public IP address using the ipify API.</p>
-
-        <!-- Button to trigger the fetch request -->
-        <button id="fetchIpButton" class="w-full px-4 py-3 font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-300">
-            Get My IP
-        </button>
+        <h1 class="text-3xl font-bold text-gray-800 dark:text-white">Your Public IP Address</h1>
+        <p class="text-gray-600 dark:text-gray-400">Your public IP address is automatically displayed below.</p>
 
         <!-- Area to display the result -->
         <div id="ipResult" class="mt-6 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg text-lg font-mono h-16 flex items-center justify-center">
             <!-- The IP address or a message will be displayed here -->
-            Your IP will appear here...
+            Fetching...
         </div>
     </div>
 
     <script>
-        // Get references to the button and the result display area
-        const fetchButton = document.getElementById('fetchIpButton');
+        // Get a reference to the result display area
         const ipResultDiv = document.getElementById('ipResult');
 
         // Define the function to fetch the IP address
         // Using an async function allows us to use the 'await' keyword for cleaner asynchronous code
         const getIpAddress = async () => {
-            // Show a loading message and disable the button to prevent multiple clicks
             ipResultDiv.textContent = 'Fetching...';
             ipResultDiv.classList.remove('text-red-500');
-            fetchButton.disabled = true;
-            fetchButton.classList.add('opacity-50', 'cursor-not-allowed');
 
             try {
                 // The URL for the ipify API. We ask for a JSON response.
@@ -73,16 +64,11 @@
                 console.error('There was a problem with the fetch operation:', error);
                 ipResultDiv.textContent = 'Could not fetch IP address.';
                 ipResultDiv.classList.add('text-red-500'); // Style the error message
-            } finally {
-                // This block runs regardless of whether there was an error or not
-                // Re-enable the button
-                fetchButton.disabled = false;
-                fetchButton.classList.remove('opacity-50', 'cursor-not-allowed');
             }
         };
 
-        // Add a click event listener to the button, which calls our function
-        fetchButton.addEventListener('click', getIpAddress);
+        // Add an event listener to run the function as soon as the HTML document has been completely loaded.
+        document.addEventListener('DOMContentLoaded', getIpAddress);
     </script>
 
 </body>
