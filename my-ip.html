@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch My IP Address</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Inter font for a clean look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 flex items-center justify-center min-h-screen">
+
+    <div class="w-full max-w-md p-8 space-y-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg text-center">
+        <!-- Header section -->
+        <h1 class="text-3xl font-bold text-gray-800 dark:text-white">What's My IP Address?</h1>
+        <p class="text-gray-600 dark:text-gray-400">Click the button below to find out your public IP address using the ipify API.</p>
+
+        <!-- Button to trigger the fetch request -->
+        <button id="fetchIpButton" class="w-full px-4 py-3 font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-300">
+            Get My IP
+        </button>
+
+        <!-- Area to display the result -->
+        <div id="ipResult" class="mt-6 p-4 bg-gray-100 dark:bg-gray-700 rounded-lg text-lg font-mono h-16 flex items-center justify-center">
+            <!-- The IP address or a message will be displayed here -->
+            Your IP will appear here...
+        </div>
+    </div>
+
+    <script>
+        // Get references to the button and the result display area
+        const fetchButton = document.getElementById('fetchIpButton');
+        const ipResultDiv = document.getElementById('ipResult');
+
+        // Define the function to fetch the IP address
+        // Using an async function allows us to use the 'await' keyword for cleaner asynchronous code
+        const getIpAddress = async () => {
+            // Show a loading message and disable the button to prevent multiple clicks
+            ipResultDiv.textContent = 'Fetching...';
+            ipResultDiv.classList.remove('text-red-500');
+            fetchButton.disabled = true;
+            fetchButton.classList.add('opacity-50', 'cursor-not-allowed');
+
+            try {
+                // The URL for the ipify API. We ask for a JSON response.
+                const apiUrl = 'https://api.ipify.org?format=json';
+
+                // Use the fetch API to make a GET request to the ipify API
+                const response = await fetch(apiUrl);
+
+                // Check if the response was successful (status code 200-299)
+                if (!response.ok) {
+                    // If not, throw an error to be caught by the catch block
+                    throw new Error(`Network response was not ok: ${response.statusText}`);
+                }
+
+                // Parse the JSON data from the response
+                const data = await response.json();
+
+                // Display the IP address from the parsed data
+                ipResultDiv.textContent = data.ip;
+
+            } catch (error) {
+                // If any error occurs during the fetch process, it will be caught here
+                console.error('There was a problem with the fetch operation:', error);
+                ipResultDiv.textContent = 'Could not fetch IP address.';
+                ipResultDiv.classList.add('text-red-500'); // Style the error message
+            } finally {
+                // This block runs regardless of whether there was an error or not
+                // Re-enable the button
+                fetchButton.disabled = false;
+                fetchButton.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        };
+
+        // Add a click event listener to the button, which calls our function
+        fetchButton.addEventListener('click', getIpAddress);
+    </script>
+
+</body>
+</html>
