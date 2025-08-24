@@ -64,13 +64,21 @@ const flexMessagePayload = {
     }
 };
             
-            // 5. "ยิงปืน" (สั่งให้ LINE เปิดหน้า Share)
-            liff.shareTargetPicker([flexMessagePayload]);
+            // 5. "ยิงปืนด้วยกลไกใหม่" (แทนที่ของเก่า)
+    liff.sendMessages([flexMessagePayload])
+        .then(() => {
+            window.alert('Message has been sent!');
+        })
+        .catch((err) => {
+            console.error(err);
+            window.alert('Failed to send message.');
         });
+});
     </script>
 </body>
 
 </html>
+
 
 
 
