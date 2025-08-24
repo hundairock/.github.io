@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Control Panel</title>
-    <style> /* โค้ดตกแต่งให้ปุ่มดูสวยงาม ไม่ต้องสนใจก็ได้ครับ */
+    <style> 
         body { font-family: sans-serif; text-align: center; padding: 50px; }
         button { font-size: 1.2em; padding: 15px 30px; cursor: pointer; border-radius: 8px; border: none; background-color: #007bff; color: white; }
         button:disabled { background-color: #cccccc; cursor: not-allowed; }
@@ -15,17 +15,16 @@
     <h1>แผงควบคุม</h1>
     <p>กดปุ่มด้านล่างเพื่อเตรียมข้อความสำหรับส่ง</p>
 
-    <!-- นี่คือ "ไกปืน" ของเรา -->
+    
     <button id="sendButton" disabled>กำลังเตรียมระบบ...</button>
 
-    <!-- 1. เรียกใช้ LIFF SDK (เหมือนเรียกชิ้นส่วนจากโรงงาน) -->
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     
     <script>
-        // 2. รอให้หน้าเว็บโหลดเสร็จ และทำการเชื่อมต่อกับ LINE
-        liff.init({ liffId: '2007980698-QeM1EMWK' }) // **จุดที่ 1 ที่ต้องแก้ไข**
+        
+        liff.init({ liffId: '2007980698-QeM1EMWK' }) // 
             .then(() => {
-                // เมื่อเชื่อมต่อสำเร็จ ให้ขึ้นข้อความว่าปืนพร้อมยิง และทำให้ปุ่มกดได้
+                
                 document.getElementById('sendButton').disabled = false;
                 document.getElementById('sendButton').textContent = 'สร้างและส่งข้อความ';
             })
@@ -34,18 +33,20 @@
                 alert('ไม่สามารถเชื่อมต่อกับระบบ LIFF ได้');
             });
 
-        // 3. เมื่อเรา "เหนี่ยวไก" (กดปุ่ม)
+        
         document.getElementById('sendButton').addEventListener('click', () => {
 
-            // 4. "บรรจุกระสุน" (สร้างข้อความ Flex Message)
+            
 const flexMessagePayload = {
-    // *** 1. บอกระบบว่านี่คือ "Flex Message" *** (ส่วนที่ขาดไป)
+    
     "type": "flex",
-    "altText": "คุณได้รับข้อความสำคัญ", // ข้อความแจ้งเตือน
+    "altText": "คุณได้รับข้อความสำคัญ",
 
-    // *** 2. จากนั้นจึงใส่ "เนื้อหา" (Bubble) ของคุณเข้าไปข้างใน ***
+    
     "contents": {
         "type": "bubble",
+
+        
         "body": {
             "type": "box",
             "layout": "vertical",
@@ -54,9 +55,12 @@ const flexMessagePayload = {
                 {
                     "type": "image",
                     "url": "https://travel.mthai.com/app/uploads/2019/03/phuket-cover.jpg"
+                    // ไม่มี action ที่นี่!
                 }
             ]
         },
+
+        
         "action": {
             "type": "uri",
             "uri": "https://liff.line.me/2007980378-mYEDJrOj"
@@ -64,20 +68,15 @@ const flexMessagePayload = {
     }
 };
             
-            // 5. "ยิงปืนด้วยกลไกใหม่" (แทนที่ของเก่า)
-    liff.sendMessages([flexMessagePayload])
-        .then(() => {
-            window.alert('Message has been sent!');
-        })
-        .catch((err) => {
-            console.error(err);
-            window.alert('Failed to send message.');
-        });
+            
+    // 5. "ยิงปืนโดยใช้ศูนย์เล็ง" (กลไกที่ถูกต้องตามความต้องการของคุณ)
+    liff.shareTargetPicker([flexMessagePayload]);
 });
     </script>
 </body>
 
 </html>
+
 
 
 
