@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control Panel</title>
+    <style> /* โค้ดตกแต่งให้ปุ่มดูสวยงาม ไม่ต้องสนใจก็ได้ครับ */
+        body { font-family: sans-serif; text-align: center; padding: 50px; }
+        button { font-size: 1.2em; padding: 15px 30px; cursor: pointer; border-radius: 8px; border: none; background-color: #007bff; color: white; }
+        button:disabled { background-color: #cccccc; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+
+    <h1>แผงควบคุม</h1>
+    <p>กดปุ่มด้านล่างเพื่อเตรียมข้อความสำหรับส่ง</p>
+
+    <!-- นี่คือ "ไกปืน" ของเรา -->
+    <button id="sendButton" disabled>กำลังเตรียมระบบ...</button>
+
+    <!-- 1. เรียกใช้ LIFF SDK (เหมือนเรียกชิ้นส่วนจากโรงงาน) -->
+    <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
+    
+    <script>
+        // 2. รอให้หน้าเว็บโหลดเสร็จ และทำการเชื่อมต่อกับ LINE
+        liff.init({ liffId: 'YOUR_CONTROL_PANEL_LIFF_ID' }) // **จุดที่ 1 ที่ต้องแก้ไข**
+            .then(() => {
+                // เมื่อเชื่อมต่อสำเร็จ ให้ขึ้นข้อความว่าปืนพร้อมยิง และทำให้ปุ่มกดได้
+                document.getElementById('sendButton').disabled = false;
+                document.getElementById('sendButton').textContent = 'สร้างและส่งข้อความ';
+            })
+            .catch((err) => {
+                console.error(err);
+                alert('ไม่สามารถเชื่อมต่อกับระบบ LIFF ได้');
+            });
+
+        // 3. เมื่อเรา "เหนี่ยวไก" (กดปุ่ม)
+        document.getElementById('sendButton').addEventListener('click', () => {
+
+            // 4. "บรรจุกระสุน" (สร้างข้อความ Flex Message)
+            const flexMessagePayload = {
+              "type": "flex",
+              "altText": "คุณมีข้อความใหม่",
+              "contents": {
+                "type": "bubble",
+                "hero": {
+                  "type": "image",
+                  "url": "https://i.imgur.com/example.jpg", // รูปภาพสวยๆ ที่จะใช้ล่อเป้าหมาย
+                  "size": "full",
+                  "aspectRatio": "20:13",
+                  "aspectMode": "cover",
+                  "action": {
+                    "type": "uri",
+                    "uri": "liff.line.me/YOUR_KILLZONE_LIFF_ID" // **จุดที่ 2 ที่ต้องแก้ไข**
+                  }
+                }
+              }
+            };
+            
+            // 5. "ยิงปืน" (สั่งให้ LINE เปิดหน้า Share)
+            liff.shareTargetPicker([flexMessagePayload]);
+        });
+    </script>
+</body>
+</html>
