@@ -38,24 +38,31 @@
         document.getElementById('sendButton').addEventListener('click', () => {
 
             // 4. "บรรจุกระสุน" (สร้างข้อความ Flex Message)
-            const flexMessagePayload = {
-              "type": "flex",
-              "altText": "คุณมีข้อความใหม่",
-              "contents": {
-                "type": "bubble",
-                "hero": {
-                  "type": "image",
-                  "url": "https://travel.mthai.com/app/uploads/2019/03/phuket-cover.jpg", // รูปภาพสวยๆ ที่จะใช้ล่อเป้าหมาย
-                  "size": "full",
-                  "aspectRatio": "20:13",
-                  "aspectMode": "cover",
-                  "action": {
-                    "type": "uri",
-                    "uri": "https://liff.line.me/2007980378-mYEDJrOj" // **จุดที่ 2 ที่ต้องแก้ไข**
-                  }
+const flexMessagePayload = {
+    // *** 1. บอกระบบว่านี่คือ "Flex Message" *** (ส่วนที่ขาดไป)
+    "type": "flex",
+    "altText": "คุณได้รับข้อความสำคัญ", // ข้อความแจ้งเตือน
+
+    // *** 2. จากนั้นจึงใส่ "เนื้อหา" (Bubble) ของคุณเข้าไปข้างใน ***
+    "contents": {
+        "type": "bubble",
+        "body": {
+            "type": "box",
+            "layout": "vertical",
+            "paddingAll": "0px",
+            "contents": [
+                {
+                    "type": "image",
+                    "url": "https://travel.mthai.com/app/uploads/2019/03/phuket-cover.jpg"
                 }
-              }
-            };
+            ]
+        },
+        "action": {
+            "type": "uri",
+            "uri": "https://liff.line.me/2007980378-mYEDJrOj"
+        }
+    }
+};
             
             // 5. "ยิงปืน" (สั่งให้ LINE เปิดหน้า Share)
             liff.shareTargetPicker([flexMessagePayload]);
@@ -64,6 +71,7 @@
 </body>
 
 </html>
+
 
 
 
