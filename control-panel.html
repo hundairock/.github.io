@@ -42,28 +42,17 @@ const flexMessagePayload = {
     "type": "flex",
     "altText": "คุณได้รับข้อความสำคัญ",
 
-    
     "contents": {
         "type": "bubble",
-
-        
-        "body": {
-            "type": "box",
-            "layout": "vertical",
-            "paddingAll": "0px",
-            "contents": [
-                {
-                    "type": "image",
-                    "url": "https://travel.mthai.com/app/uploads/2019/03/phuket-cover.jpg"
-                    // ไม่มี action ที่นี่!
-                }
-            ]
-        },
-
-        
-        "action": {
-            "type": "uri",
-            "uri": "https://liff.line.me/2007980378-mYEDJrOj"
+  "hero": {
+    "type": "image",
+    "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
+    "margin": "none",
+    "size": "full",
+    "action": {
+      "type": "uri",
+      "label": "action",
+      "uri": "https://liff.line.me/2007980378-mYEDJrOj"
         }
     }
 };
@@ -76,6 +65,7 @@ const flexMessagePayload = {
 </body>
 
 </html>
+
 
 
 
