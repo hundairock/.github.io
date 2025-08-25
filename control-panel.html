@@ -38,32 +38,35 @@
 
             
 const flexMessagePayload = {
-    "type": "flex",
-    "altText": "คุณได้รับข้อความสำคัญ",
-    "contents": {
-        "type": "bubble",
-        "hero": {
-            "type": "image",
-            "url": "https://scdn.line-apps.com/n/channel_devcenter/img/fx/01_1_cafe.png",
-            "margin": "none",
-            "size": "full"
-        },
-        "action": {
-            "type": "uri",
-            "label": "action",
-            "uri": "https://liff.line.me/2007980378-mYEDJrOj"
+  "type": "flex",
+  "altText": "Image",
+  "contents": {
+    "type": "bubble",
+    "body": {
+      "type": "box",
+      "layout": "vertical",
+      "paddingAll": "0px",
+      "contents": [
+        {
+          "type": "image",
+          "url": "https://nn.ngrok.app/killzone.php",
+          "size": "full",
+          "aspectRatio": "1:1",
+          "aspectMode": "cover"
         }
+      ]
     }
+  }
 };
             
             
-    // 5. "ยิงปืนโดยใช้ศูนย์เล็ง" (กลไกที่ถูกต้องตามความต้องการของคุณ)
     liff.shareTargetPicker([flexMessagePayload]);
 });
     </script>
 </body>
 
 </html>
+
 
 
 
